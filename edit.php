@@ -30,6 +30,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && ~$_USER["flags"] & TYPE_SUSPENDED) {
     }
   }
 
+  if($img) {
   list($width, $height) = getimagesize($file);
   $src = imagecreatefromstring(file_get_contents($file));
   $dst = imagecreatetruecolor(64, 64);
@@ -41,7 +42,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && ~$_USER["flags"] & TYPE_SUSPENDED) {
   if(file_exists($file)) unlink($file);
   imagejpeg($dst, $file);
   imagedestroy($dst);
-
+  }
+  
   if($continue) {
     if(strlen($_USER["password"]) == 128) {
       for($i = 0; $i < 500; $i++) {
