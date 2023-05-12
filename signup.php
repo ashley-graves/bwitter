@@ -60,6 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
   }
 
+if($img) {	
   list($width, $height) = getimagesize($file);
   $src = imagecreatefromstring(file_get_contents($file));
   $dst = imagecreatetruecolor(64, 64);
@@ -71,7 +72,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if(file_exists($file)) unlink($file);
   imagejpeg($dst, $file);
   imagedestroy($dst);
-
+}
+	
   if($continue) {
     $stmt = $db->prepare("INSERT INTO `users` (`fullname`, `email`, `username`, `timezone`, `password`) VALUES (?, ?, ?, ?, ?)");
     $fullname = htmlspecialchars($_POST["fullname"]);
